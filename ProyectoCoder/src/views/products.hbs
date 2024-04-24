@@ -1,0 +1,42 @@
+<div>
+    <h1>Productos</h1>
+    {{#if user}}
+        <p>Bienvenido, {{user.name}}!</p>
+        <p>Rol: {{user.role}}</p>
+        <button onclick="location.href='/logout'">Logout</button>
+    {{/if}}
+    <ul>
+        {{#each products}}
+            <li>
+                <h2>{{this.title}}</h2>
+                <p>{{this.description}}</p>
+                <p>Precio: {{this.price}}</p>
+                <img src="{{this.thumbnail}}" alt="{{this.title}}">
+            </li>
+        {{/each}}
+    </ul>
+</div>
+
+    
+{{!-- para realizar este formulario tome en cuenta las propiedades de Class products del archivo ProductManager.js  --}}
+    {{!-- <form>
+        <input type="text" name="title" id = "title" placeholder="title">
+        <input type="text" name="description" id = "description" placeholder="description">
+        <input type="number" name="price" id = "price" placeholder="price">
+        <input type="text" name="thumbnail" id = "thumbnail" placeholder="thumbail">
+        <input type="text"name="code" id = "code" placeholder="code">
+        <input type="number" name="stock" id = "stock" placeholder="stock">
+        <input type="submit" value="Send">
+    </form> --}}
+    {{!-- <h2>
+        Products list
+    </h2> --}}
+    <div id="products"></div>
+
+{{!-- biblioteca socket.io --}}
+    <script src="/socket.io/socket.io.js"></script>
+    {{!-- estescript esta relacionado con el archivo main.js de la carpeta public --}}
+    <script src="/js/main.js"></script>
+    
+
+</div>
