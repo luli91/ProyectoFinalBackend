@@ -1,6 +1,6 @@
 //importa los servicios
 import productDao from '../daos/dbManager/product.dao.js';
-import { crearDato, deleteServices } from '../services/products.services.js';
+import { crearDato, obtenerDatos } from '../services/products.services.js';
 
 
 
@@ -21,14 +21,28 @@ export const getProductById = async (req, res) => {
     }
 }
 
+// Esta función obtiene los productos y los envía como una respuesta JSON
 export const getProducts = async (req, res) => {
-    const products = await productDao.findProduct({});
-    const productsForView = products.docs.map(doc => doc.toObject());
-    res.render('products', {
-        user: req.session.user,
-        products: productsForView
-    });
-}
+    try {
+        const products = await obtenerProductos(req);
+        // console.log('Enviando productos:', products);
+        res.json(products);
+    } catch (error) {
+        console.error('Error al obtener los productos:', error);
+        res.status(500).send('¡Algo salió mal!');
+    }
+};
+
+// Esta función solo obtiene los productos
+export const obtenerProductos = async (req) => {
+    const products = await obtenerDatos(req);
+    // console.log('Productos desde obtenerDatos:', products);
+    if (products && products.payload) {
+        return products.payload;
+    } else {
+        throw new Error('No se encontraron productos');
+    }
+};
 
 export const updateProduct = async (req, res) => {
     try {
@@ -37,6 +51,11 @@ export const updateProduct = async (req, res) => {
         if (req.user.role !== 'admin' && req.user._id !== product.owner) {
             return res.status(403).send('No tienes permiso para modificar este producto');
         }
+        // Validación de datos
+        if (!req.body.title || !req.body.description || !req.body.price || !req.body.thumbnail || !req.body.code || !req.body.stock) {
+            throw new Error('Faltan datos requeridos');
+        }
+        
         const post = await productDao.updateProduct(id, req.body);
         console.info(`Product updated: ${JSON.stringify(post)}`);
         res.json({

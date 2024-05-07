@@ -3,7 +3,7 @@ import productDao from '../daos/dbManager/product.dao.js';
 
 export const obtenerDatos = async (req) => {
     //logica de negocio
-        let { limit, page, sort, category, minStock } = req.query;
+        let { limit, page, sort, category, maxPrice, productName } = req.query;
 
         // Establece valores predeterminados
         limit = limit ? parseInt(limit) : 10;
@@ -15,8 +15,11 @@ export const obtenerDatos = async (req) => {
         if (category) {
             query.category = category;
         }
-        if (minStock) {
-            query.stock = { $gte: minStock };
+        if (maxPrice) {
+            query.price = { $lte: maxPrice };
+        }
+        if (productName) {
+            query.title = productName;
         }
 
         // Crea el objeto de opciones para paginate
@@ -29,10 +32,13 @@ export const obtenerDatos = async (req) => {
         // Realiza la consulta con los parámetros
         const result = await productDao.findProduct(query, options);
 
+ // Convierte los documentos de Mongoose a objetos JavaScript
+        const products = result.docs.map(doc => doc.toObject());
+
         // Crea el objeto de respuesta
         const response = {
             status: 'success',
-            payload: result.docs,
+            payload: products,
             totalPages: result.totalPages,
             prevPage: result.prevPage,
             nextPage: result.nextPage,
@@ -47,6 +53,12 @@ export const obtenerDatos = async (req) => {
     }
 
     export const crearDato = async (dato) => {
+        // Validación de datos
+    if (!dato.title || !dato.description || !dato.price || !dato.thumbnail || !dato.code || !dato.stock) {
+        throw new Error('Faltan datos requeridos');
+    }
+
+    // Creación del producto
         const products = await productDao.createProduct(dato);
     
         return {

@@ -4,8 +4,11 @@ import { PRIVATE_KEY } from '../utils.js';
 
 export async function isAdmin(req, res, next) {
     try {
-        // token del usuario se envía en el encabezado de autorización
-        const authHeader = req.headers.authorization;
+        // console.log('Encabezados recibidos:', req.headers);
+        // token del usuario se envía en el encabezado de autorización o en la cookie 'jwtCookieToken'
+        const authHeader = req.headers.authorization || `Bearer ${req.cookies.jwtCookieToken}`;
+
+        
         const token = authHeader.split(' ')[1]; // Aquí se obtiene el token sin el prefijo 'Bearer '
 
         // console.log('Token recibido:', token);

@@ -1,0 +1,240 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* boton login */
+.login-button {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none; 
+    padding-right: 30px;
+}
+
+.login-icon {
+    width: 40px; 
+    height: 40px;
+}
+
+/* titulo */
+h1 {
+    text-align: center; 
+    transition: transform 2s; 
+}
+
+h1:hover {
+    transform: scale(1.1); 
+}
+
+
+/* formulario de login */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px;
+}
+
+#loginForm {
+    width: 300px;
+    background-color: #fff;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.1);
+    padding: 30px;
+    border-radius: 10px;
+}
+
+#loginForm input[type="text"],
+#loginForm input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#loginForm input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#loginForm input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.links {
+    margin-top: 20px;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.links a {
+    display: block;
+    color: #007BFF;
+    text-decoration: none;
+}
+
+
+/* products.hbs */
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+li {
+    width: 200px;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+li:hover {
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
+}
+
+li h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+li p {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+li img {
+    width: 100%;
+    height: auto;
+}
+
+li .price {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* vista perfil */
+.profile-page {
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+p {
+    color: #666;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+}
+
+/* vista admin */
+.admin-panel {
+    width: 80%; 
+    margin: auto; 
+}
+
+h1 {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.update-button, .delete-button {
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.update-button {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.delete-button {
+    background-color: #f44336;
+    color: #fff;
+}
+
+.update-button:hover {
+    background-color: #45a049;
+}
+
+.delete-button:hover {
+    background-color: #da190b;
+}
+

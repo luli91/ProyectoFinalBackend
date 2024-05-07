@@ -11,8 +11,9 @@ class cartDao {
     }
     //crea un nuevo carrito en la base de datos
     async createCart(cart) {
-        return await cartModel.create(cart);
+        return await cartModel.create({ userID: cart.userID, products: [] });
     }
+    
     //actualiza un carrito existente en la base de datos
     async updateCart(_id, cart) {
         return await cartModel.findByIdAndUpdate(_id, {products: cart});

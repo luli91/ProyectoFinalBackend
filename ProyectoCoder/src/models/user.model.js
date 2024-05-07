@@ -23,7 +23,10 @@ const schema = new mongoose.Schema({
         required:true
     },
     loggedBy: String,
-    role: { type: String, default: 'user',enum: ['user', 'admin'], }
+    role: { type: String, default: 'user',enum: ['user', 'admin'], 
+    },
+
+    lastConnection: { type: Date, default: Date.now },
 })
 
 const userModel = mongoose.model(collection, schema)

@@ -1,8 +1,8 @@
-// import { Router } from "express";
-// import { sendEmail } from '../controllers/email.controller.js';
+import { Router } from "express";
+import { deleteInactiveUsers  } from '../controllers/user.controller.js';
 
-// const router = Router();
+const router = Router();
 
-// router.get("/", sendEmail);
+router.get("/", deleteInactiveUsers );
 
-// export default router;
+export default router;

@@ -14,6 +14,7 @@ const __dirname = path.dirname(__filename);
 // Accede a la clave secreta desde las variables de entorno
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 // console.log('PRIVATE_KEY:', PRIVATE_KEY); 
+
 // Función para generar un nuevo token JWT para un usuario
 export const generateJWToken = (user) => {
     return jwt.sign({ user }, PRIVATE_KEY, { expiresIn: '24h' });
@@ -35,6 +36,7 @@ export const verifyJWT = (req, res, next) => {
     res.status(401).send({ error: "Acceso denegado, token no proporcionado" });
     }
 }
+
 // Función para crear un hash de la contraseña
 export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
@@ -67,5 +69,12 @@ export const authorization = (role) => {
         next()
     }
 };
-
+export const decodeToken = (token) => {
+    try {
+        return jwt.verify(token, PRIVATE_KEY);
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
 export { __dirname, PRIVATE_KEY };

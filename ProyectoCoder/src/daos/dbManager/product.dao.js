@@ -26,7 +26,7 @@ class ProductDao {
     }
     
     async getProducts({ limit, page }) {
-        const query = {}; // define tu consulta aquí
+        const query = {}; 
         const options = {
             limit,
             page,

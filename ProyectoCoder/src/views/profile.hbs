@@ -1,6 +1,25 @@
-<div>
-    <h1>Tu perfil (sin datos sensibles)</h1>
-    <p>{{user.name}}</p>
-    <p>{{user.email}}</p>
-    <p>{{user.age}}</p>
+<div class="profile-page">
+    <button onclick="location.href='/'">inicio</button>
+    <h1>Hola, {{user.name}}!!!</h1>
+
+    <h2>Datos personales</h2>
+    <p>Email: {{user.email}}</p>
+    <p>age: {{user.age}}</p>
+    <p>role: {{user.role}}</p>
+
+    <h2>Lista de deseos</h2>
+    <ul>
+        {{#each user.wishlist}}
+            <li>{{this.title}}</li>
+        {{/each}}
+    </ul>
+
+    <h2>Pedidos</h2>
+    <ul>
+        {{#each user.orders}}
+            <li>Ticket número: {{this.ticketNumber}}</li>
+        {{/each}}
+    </ul>
+
+    <button onclick="location.href='/api/logout'">Salir</button>
 </div>

@@ -1,12 +1,23 @@
 import { cartService } from '../services/carts.services.js';
 
 
-//Crea un nuevo carrito para un usuario.
+
+// Crea un nuevo carrito para un usuario.
 export const createCartController = async (req, res) => {
-    // Obtiene el userID del token decodificado
-    const userID = req.user.id;
-    const newCart = await cartService.createCart(userID);
-    res.status(201).json(newCart);
+    try {
+        // Obtiene el userID del token decodificado
+        const userID = req.user.user.id;
+        // console.log('UserID:', userID); // Agrega un registro de consola para el userID
+
+        const newCart = await cartService.createCart({ userID: userID });
+
+        // console.log('New Cart:', newCart); // Agrega un registro de consola para el nuevo carrito
+
+        res.status(201).json(newCart);
+    } catch (error) {
+        // console.log('Error in createCartController:', error); // Agrega un registro de consola para cualquier error
+        res.status(500).send({ error: 'Ocurrió un error al crear el carrito' });
+    }
 };
 
 
@@ -50,7 +61,6 @@ export const deleteWholeCartController = async (req, res) => {
     res.json({ status: 'Todos los productos eliminados del carrito' });
 };
 
-//purchaseCartController
 export const purchaseCartController = async (req, res) => {
     const cartId = req.params.cid;
     const productsFromCart = await getProductsFromCartById(cartId);
@@ -62,7 +72,7 @@ export const purchaseCartController = async (req, res) => {
         await deleteProductFromCartByIdController(reqs, res);
     }
     if (validProducts.length > 0) {
-        const ticket = { amount: grandTotal, purchaser: req.session.user.username };
+        const ticket = { amount: grandTotal, purchaser: req.user.username };
         const createdTicket = await createTicket(ticket, res);
     }
 };

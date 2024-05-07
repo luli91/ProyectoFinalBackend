@@ -1,4 +1,4 @@
-import CustomRouter from '../routes/custom/custom.router.js';
+import { Router } from "express";
 import { 
     createCartController, 
     getCartByIdController, 
@@ -9,38 +9,40 @@ import {
     purchaseCartController,
     updateProductQuantityInCartController,
 } from '../controllers/carts.controller.js';
-import { isAdmin } from '../middlewares/adminMiddleware.js';
-import { ownerShipMiddleware } from '../middlewares/ownership.middleware.js'
+// import { isAdmin } from '../middlewares/adminMiddleware.js';
+// import { ownerShipMiddleware } from '../middlewares/ownership.middleware.js'
+import { verifyJWT } from "../utils.js";
 
-const router = new CustomRouter();
+
+const router = Router();
 
 // Rol user
 
 // Crea un nuevo carrito
-router.post('/', [ownerShipMiddleware], createCartController); 
+router.post('/', verifyJWT, createCartController); 
 
 // Obtiene un carrito por su ID
-router.get('/:cid', [ownerShipMiddleware], getCartByIdController); 
+router.get('/:cid', getCartByIdController); 
 
 // Actualiza solo la cantidad de un producto especifico en un carrito existente
-router.put('/:cid/products/:pid', [ownerShipMiddleware], updateProductQuantityInCartController); 
+router.put('/:cid/products/:pid', updateProductQuantityInCartController); 
 
 // Añade un producto a un carrito
-router.post('/:cid/products/:pid', [ownerShipMiddleware], addProductToCartController); 
+router.post('/:cid/products/:pid', addProductToCartController); 
 
 // Elimina un producto de un carrito
-router.delete('/:cid/products/:pid', [ownerShipMiddleware], removeProductFromCartController); 
+router.delete('/:cid/products/:pid', removeProductFromCartController); 
 
 // Realiza la compra de los productos en un carrito
-router.post('/:cid/purchase', [ownerShipMiddleware], purchaseCartController); 
+router.post('/:cid/purchase', purchaseCartController); 
 
 
 //Rol admin
 
 //Actualiza un carrito existente
-router.put('/:cid', [isAdmin], updateCartController);
+router.put('/:cid', updateCartController);
 
 // Elimina todos los productos de un carrito
-router.delete('/:cid', [isAdmin], deleteWholeCartController); 
+router.delete('/:cid', deleteWholeCartController); 
 
-export default router.getRouter();
+export default router;
