@@ -18,26 +18,15 @@ config();
 
 
 const app = express ();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
+const connection = mongoose.connect(process.env.MONGO_URL)
+  .then(() => console.log('DB Connected Successfully'))
+  .catch((err) => console.error('DB Connection Error: ', err));
+
+
 //Para que nuestro servidor express pueda interpretar en forma automática mensajes de tipo JSON en formato urlencoded al recibirlos hay que agregar las siguientes 2 lineas 
 app.use(express.json())
 app.use (express.urlencoded({extended: true}));
-
-const password = process.env.DB_PASSWORD; 
-const dbName = process.env.DB_NAME; 
-
-// Mongoose connection
-mongoose
-  .connect(
-    `mongodb+srv://cynthiamedina1808:${password}@proyectofinal.kwov5cd.mongodb.net/${dbName}?retryWrites=true&w=majority&appName=proyectofinal`
-  )
-  .then(() => {
-    console.log("DB Connected");
-  })
-  .catch((err) => {
-    console.log("Hubo un error");
-    console.log(err);
-  });
 
 
 // Creas una instancia de express-handlebars

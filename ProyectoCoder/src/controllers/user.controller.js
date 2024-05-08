@@ -1,7 +1,7 @@
 import { userService } from '../services/user.services.js'; 
 import userModel from '../models/user.model.js';
 import { sendEmail } from './email.controller.js';
-
+import multer from 'multer';
 
 export const getAllUsers = async () => {
     try {
@@ -25,6 +25,20 @@ export const getUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     const { first_name, last_name, age, email, role } = req.body;
     const userId = req.params.uid;
+
+    // Si el usuario está intentando cambiar a premium...
+    if (role === 'premium') {
+        const user = await userService.getUserById(userId);
+        const requiredDocuments = ['Identificación', 'Comprobante de domicilio', 'Comprobante de estado de cuenta'];
+
+        // Verifica que el usuario haya cargado todos los documentos requeridos
+        for (const doc of requiredDocuments) {
+            if (!user.documents.some(document => document.name === doc)) {
+                return res.status(400).send({ status: "error", message: `El usuario no ha terminado de procesar su documentación. Falta: ${doc}` });
+            }
+        }
+    }
+
     const userDto = {
         first_name,
         last_name,
@@ -34,7 +48,8 @@ export const updateUser = async (req, res) => {
     }
     const user = await userService.update(userId, userDto);
     res.status(200).send({ status: "success", payload: user });
-}
+};
+
 
 export const deleteUser = async (req, res) => {
     const userId = req.params.uid;
@@ -90,6 +105,17 @@ export const saveUser = async (req, res) => {
     const user = await userService.save(userDto); // Usa el método save del servicio
     res.status(201).send({ status: "success", payload: user });
 }
+
+// Configura multer para guardar los archivos en la carpeta correcta
+const upload = multer({ dest: 'documents/' });
+
+export const uploadDocuments = async (req, res) => {
+    const userId = req.params.uid;
+    const documents = req.files.map(file => ({ name: file.originalname, reference: file.path }));
+
+    const user = await userService.update(userId, { documents });
+    res.status(200).send({ status: "success", payload: user });
+}; 
 
 export default {
     deleteUser,

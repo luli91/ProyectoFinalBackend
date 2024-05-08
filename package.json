@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ProyectoCoder/src/app.js"
   },
@@ -54,6 +55,7 @@
     "mongoose": "^8.3.2",
     "mongoose-paginate-v2": "^1.8.0",
     "ms": "^2.1.2",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.13",
     "nopt": "^1.0.10",
     "normalize-path": "^3.0.0",

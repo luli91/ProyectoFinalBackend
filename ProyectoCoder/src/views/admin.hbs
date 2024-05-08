@@ -16,6 +16,7 @@
             <select class="role-select" data-user-id="{{this._id}}">
                 <option value="user" {{#if (eq this.role 'user')}}selected{{/if}}>User</option>
                 <option value="admin" {{#if (eq this.role 'admin')}}selected{{/if}}>Admin</option>
+                <option value="premium" {{#if (eq this.role 'premium')}}selected{{/if}}>Premium</option>
             </select>
             <button class="update-button" data-user-id="{{this._id}}">Actualizar</button>
         </td>

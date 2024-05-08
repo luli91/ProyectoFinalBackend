@@ -105,4 +105,4 @@ describe('Product Routes', () => {
     });
 });
 
-//npx mocha ProyectoCoder/test/*.js
+//npx mocha ProyectoCoder/test/products.test.js
